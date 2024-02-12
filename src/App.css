@@ -88,7 +88,7 @@ img{
 
 }
 
-@media screen and (max-width: 280px) {
+@media screen and (max-width: 350px) {
   .post{
     width: 200px;
   } 
