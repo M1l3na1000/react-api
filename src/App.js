@@ -1,7 +1,7 @@
 //Hooks React
 import React, {useEffect, useState} from "react";
 import "./App.css"; //estilo
-import logo from './logo.svg';
+import logo from './video-camera-png.png';
 
 function App(){ 
   const [movie, setMovie] = useState([]);  // controlar o estado
