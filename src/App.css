@@ -47,7 +47,7 @@ header a {
 }
 
 header nav a:hover {
-  color: #3FEDF3;
+  color: #ddce2e;
   text-decoration: none;
   transform: scale(1.05);
 }
