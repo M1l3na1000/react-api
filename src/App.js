@@ -1,6 +1,7 @@
 //Hooks React
 import React, {useEffect, useState} from "react";
 import "./App.css"; //estilo
+import logo from './logo.svg';
 
 function App(){ 
   const [movie, setMovie] = useState([]);  // controlar o estado
@@ -21,7 +22,7 @@ function App(){
   return(
     <div className='container'>
       <header>
-        <strong className="titulo">REACT MOVIES</strong>
+        <img src={logo} className="App-logo" alt="logo"/>
         <nav>
           <ul>
             <li><a href="">Home</a></li>
@@ -36,7 +37,7 @@ function App(){
           <article className='post' key={item.id}>
             <strong className="nome">{item.nome}</strong>
             <p className='sinopse'>{item.sinopse}</p>
-            <img src={item.foto}/>            
+            <img className='foto' src={item.foto}/>            
             <a className="botao" href="">Acessar</a>
           </article>
         );

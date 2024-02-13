@@ -25,15 +25,6 @@ header{
   background-color: #E03C00;
   color: #fff;
 }
-.titulo{
-  transition: .2s;
-}
-
-.titulo:hover{
-  color: #304D6D;
-  text-decoration: none;
-  transform: scale(1.05);
-}
 
 header nav ul {
   width: 100%;
@@ -56,7 +47,7 @@ header a {
 }
 
 header nav a:hover {
-  color: #304D6D;
+  color: #3FEDF3;
   text-decoration: none;
   transform: scale(1.05);
 }
@@ -79,7 +70,7 @@ header nav a:hover {
   margin-bottom: 25px;
 }
 
-img{
+.foto{
   border: 10px inset #E03C00;
   border-radius: 15px;
   margin: 10px;
@@ -149,5 +140,23 @@ footer{
   .post{
     width: 200px;
   } 
+}
 
+.App-logo {
+  height: 15vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
