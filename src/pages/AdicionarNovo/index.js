@@ -23,24 +23,28 @@ function AdicionarNovo(){
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Nome do filme:
-        <input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
-      </label>
-      <label>
-        Sinopse do filme:
-        <textarea
-          value={sinopse}
-          onChange={(e) => setSinopse(e.target.value)}
-        />
-      </label>
-      <button type="submit">Adicionar Filme</button>
-    </form>
+    <div className="container">
+        <form onSubmit={handleSubmit}>
+            <label>
+                Nome do filme:
+                <input
+                type="text"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                />
+            </label>
+            <br/>
+            <label>
+                Sinopse do filme:
+                <textarea
+                value={sinopse}
+                onChange={(e) => setSinopse(e.target.value)}
+                />
+            </label>
+            <br/>
+            <button type="submit" className="area">Adicionar Filme</button>
+        </form>
+    </div>
   );
 }
 //exportar
