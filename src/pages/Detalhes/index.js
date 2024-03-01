@@ -9,7 +9,7 @@ function Detalhes(){
 
   useEffect( () => { //função para consumir a api
     function carregaDados(){
-      let url = `https://sujeitoprogramador.com/r-api/?api=filmes${id}`;
+      let url = `https://sujeitoprogramador.com/r-api/?api=filmes/${id}`;
 
       fetch(url)
       .then((r) => r.json())
@@ -25,7 +25,12 @@ function Detalhes(){
       <article className='post' key={movie.id}>
         <strong className="nome">{movie.nome}</strong>
         <p className='sinopse'>{movie.sinopse}</p>
-        <img className='foto' src={movie.foto}/>            
+        <img className='foto' src={movie.foto}/>
+        <button className="area">
+          <a target="blank" rel="external" href={`https://youtube.com/results?search_query=${movie.nome} Trailer`}>
+            Trailer
+          </a>
+        </button>            
         </article>
     </div>
   );
