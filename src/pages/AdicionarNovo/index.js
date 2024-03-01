@@ -3,22 +3,26 @@ import React, {useEffect, useState} from "react";
 import "./style.css"; //estilo
 import { toast } from 'react-toastify'
 
-
 function AdicionarNovo(){ 
   const [movie, setMovie] = useState([]);  // controlar o estado
-  const [filmes, setFilmes] = useState([]); 
-  useEffect( () => { //função para consumir a api
-    function carregaDados(){
-      let url = 'https://sujeitoprogramador.com/r-api/?api=filmes';
+  const [filmes, setFilmes] = useState([]);
+
+  useEffect(() => {
+    function carregaDados() {
+      let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
       fetch(url)
-      .then((r) => r.json())
-      .then((json) => {
-        setFilmes(json);
-      })
+        .then((r) => r.json())
+        .then((json) => {
+          setFilmes(json.meals);
+        })
+        .catch((error) => {
+          toast.error("Erro ao buscar filmes");
+        });
     }
+
     carregaDados();
-  },[]);
+  }, []);
 
 
   const [newPost, setNewPost] = useState({
@@ -37,19 +41,17 @@ function AdicionarNovo(){
     console.log('New recipe added:', newPost);
     setNewPost({
       nome: '',
-      sinopse: '',
+      modoP: '',
+      ingredientes: ''
     });
   };
-
-  const url = 'https://sujeitoprogramador.com/r-api/?api=filmes';
-
   
 
   return (
     <div className="container">
         <form onSubmit={handleSubmit}>
             <label>
-                Nome do filme:
+                Nome da receita:
                 <input
                 name='nome'
                 type="text"
@@ -59,30 +61,39 @@ function AdicionarNovo(){
             </label>
             <br/>
             <label>
-                Sinopse do filme:
+                Modo de Preparo:
                 <input
-                name='sinopse'
+                name='modoP'
                 type="text"
-                value={newPost.sinopse}
+                value={newPost.modoP}
                 onChange={handleChange}
                 />
             </label>
             <br/>
-            <button type="submit" className="area">Adicionar Filme</button>
+            <label>
+                Ingredientes(minimo 3):
+                <input
+                name='ingredientes'
+                type="text"
+                value={newPost.ingredientes}
+                onChange={handleChange}
+                />
+            </label>
+            <button type="submit" className="area">Adicionar Receita</button>
         </form>
         <article className="post">
-        <h1>Meus filmes</h1>
+        <h1>Minhas Receitas</h1>
         {filmes.map((item) => { //percorrendo a api
         return(
-          <article className="meusfilmes" key={item.id}>
-            <li>{item.nome} - {item.sinopse}</li>
+          <article className="meusfilmes" key={item.idMeal}>
+            <li>{item.strMeal} - {item.strInstructions} - {item.strIngredient1}; {item.strIngredient2}; {item.strIngredient3}</li>
           </article>
         );
       })}
         <ul>
         {movie.map((movie, index) => (
           <li key={index}>
-            {movie.nome} - {movie.sinopse} 
+            {movie.nome} - {movie.modoP} - {movie.ingredientes}
           </li>
         ))}
       </ul>

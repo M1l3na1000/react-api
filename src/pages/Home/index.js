@@ -1,58 +1,46 @@
-//Hooks React
-import React, {useEffect, useState} from "react";
-import "./style.css"; //estilo
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify'
+import React, { useEffect, useState } from "react";
+import "./style.css";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
+function Home() {
+  const [filmes, setFilmes] = useState([]);
 
-function Home(){ 
-  const [movie, setMovie] = useState([]);  // controlar o estado
-  const [filmes, setFilmes] = useState([])
-
-  useEffect( () => { //função para consumir a api
-    function carregaDados(){
-      let url = 'https://sujeitoprogramador.com/r-api/?api=filmes';
+  useEffect(() => {
+    function carregaDados() {
+      let url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
       fetch(url)
-      .then((r) => r.json())
-      .then((json) => {
-        setMovie(json);
-      })
+        .then((r) => r.json())
+        .then((json) => {
+          setFilmes(json.meals);
+        })
+        .catch((error) => {
+          toast.error("Erro ao buscar filmes");
+        });
     }
+
     carregaDados();
-  },[]);
+  }, []);
 
-  useEffect(()=>{
-
-    const minhaLista = localStorage.getItem("@primeflix");
-    setFilmes(JSON.parse(minhaLista) || [])
-
-  }, [])
-
-
-  function excluirFilme(id){
-    let filtroFilmes = filmes.filter( (item) => {
-      return (item.id !== id)
-    })
-
-    setFilmes(filtroFilmes);
-    localStorage.setItem("@primeflix", JSON.stringify(filtroFilmes) )
-    toast.success("Filme removido com sucesso")
-  }
-
-  return(
-    <div className='container'>
-      {movie.map((item) => { //percorrendo a api
-        return(
-          <article className='post' key={item.id}>
-            <strong className="nome">{item.nome}</strong>
-            <img className='foto' src={item.foto}/>            
-            <a><Link to={`/detalhes/${item.id}`} className="botao">Acessar</Link></a>
-          </article>
-        );
-      })}
+  return (
+    <div className="container">
+      {Array.isArray(filmes) &&
+        filmes.map((item) => {
+          return (
+            <article className="post" key={item.idMeal}>
+              <strong className="nome">{item.strMeal}</strong>
+              <img className="foto" src={item.strMealThumb} />
+              <a>
+                <Link to={`/detalhes/${item.idMeal}`} className="botao">
+                  Acessar
+                </Link>
+              </a>
+            </article>
+          );
+        })}
     </div>
   );
 }
-//exportar
+
 export default Home;
