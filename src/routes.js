@@ -48,7 +48,7 @@ const RoutesApp = () => {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path='/detalhes/:id' element={<Detalhes/>}/>
-        <Route path="/adicionarnovo" element={<AdicionarNovo/>}/>
+        <Route path="/adicionarnovo" element={<AdicionarNovo/>}/>   
 
         <Route path="*" element={<Erro/>}/>
       </Routes>

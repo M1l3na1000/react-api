@@ -1,45 +1,49 @@
 //Hooks React
 import React, {useEffect, useState} from "react";
 import "./style.css"; //estilo
+import { toast } from 'react-toastify'
 
 
 function AdicionarNovo(){ 
-    const [nome, setNome] = useState('');
-  const [sinopse, setSinopse] = useState('');
   const [movie, setMovie] = useState([]);  // controlar o estado
+  const [filmes, setFilmes] = useState([]); 
+  useEffect( () => { //função para consumir a api
+    function carregaDados(){
+      let url = 'https://sujeitoprogramador.com/r-api/?api=filmes';
+
+      fetch(url)
+      .then((r) => r.json())
+      .then((json) => {
+        setFilmes(json);
+      })
+    }
+    carregaDados();
+  },[]);
+
+
+  const [newPost, setNewPost] = useState({
+    nome: '',
+    sinopse: '',
+  });
+
+  const handleChange = (e) => {
+    setNewPost({ ...newPost, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newPost = {
-      nome,
-      sinopse
-    };
-    // Add the new recipe to your list of recipes here
-    fetch('https://sujeitoprogramador.com/r-api/?api=filmes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newPost)
-      })
-      .then((r) => {
-        if (r.ok) {
-          return r.json();
-        }
-        throw new Error('Error adding movie');
-      })
-      .then((json) => {
-        console.log('Movie added:', json);
-        setMovie((prevMovie) => [...prevMovie, json]);
-      })
-      .catch((error) => {
-        console.error('Error adding movie:', error);
-      });
-    // Reset the form fields
-    setNome('');
-    setSinopse('');
+    setMovie([...movie, newPost]);
+    // add API call here to update the recipe API
+    console.log('New recipe added:', newPost);
+    setNewPost({
+      nome: '',
+      sinopse: '',
+    });
   };
 
+  const url = 'https://sujeitoprogramador.com/r-api/?api=filmes';
+
+  
 
   return (
     <div className="container">
@@ -47,22 +51,42 @@ function AdicionarNovo(){
             <label>
                 Nome do filme:
                 <input
+                name='nome'
                 type="text"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
+                value={newPost.nome}
+                onChange={handleChange}
                 />
             </label>
             <br/>
             <label>
                 Sinopse do filme:
-                <textarea
-                value={sinopse}
-                onChange={(e) => setSinopse(e.target.value)}
+                <input
+                name='sinopse'
+                type="text"
+                value={newPost.sinopse}
+                onChange={handleChange}
                 />
             </label>
             <br/>
             <button type="submit" className="area">Adicionar Filme</button>
         </form>
+        <article className="post">
+        <h1>Meus filmes</h1>
+        {filmes.map((item) => { //percorrendo a api
+        return(
+          <article className="meusfilmes" key={item.id}>
+            <li>{item.nome} - {item.sinopse}</li>
+          </article>
+        );
+      })}
+        <ul>
+        {movie.map((movie, index) => (
+          <li key={index}>
+            {movie.nome} - {movie.sinopse} 
+          </li>
+        ))}
+      </ul>
+      </article>
     </div>
   );
 }

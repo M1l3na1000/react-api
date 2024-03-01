@@ -2,10 +2,12 @@
 import React, {useEffect, useState} from "react";
 import "./style.css"; //estilo
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 
 function Home(){ 
   const [movie, setMovie] = useState([]);  // controlar o estado
+  const [filmes, setFilmes] = useState([])
 
   useEffect( () => { //função para consumir a api
     function carregaDados(){
@@ -19,6 +21,24 @@ function Home(){
     }
     carregaDados();
   },[]);
+
+  useEffect(()=>{
+
+    const minhaLista = localStorage.getItem("@primeflix");
+    setFilmes(JSON.parse(minhaLista) || [])
+
+  }, [])
+
+
+  function excluirFilme(id){
+    let filtroFilmes = filmes.filter( (item) => {
+      return (item.id !== id)
+    })
+
+    setFilmes(filtroFilmes);
+    localStorage.setItem("@primeflix", JSON.stringify(filtroFilmes) )
+    toast.success("Filme removido com sucesso")
+  }
 
   return(
     <div className='container'>
