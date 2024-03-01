@@ -15,7 +15,26 @@ function AdicionarNovo(){
       sinopse
     };
     // Add the new recipe to your list of recipes here
-    // ...
+    fetch('https://sujeitoprogramador.com/r-api/?api=filmes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newPost)
+      })
+      .then((r) => {
+        if (r.ok) {
+          return r.json();
+        }
+        throw new Error('Error adding movie');
+      })
+      .then((json) => {
+        console.log('Movie added:', json);
+        setMovie((prevMovie) => [...prevMovie, json]);
+      })
+      .catch((error) => {
+        console.error('Error adding movie:', error);
+      });
     // Reset the form fields
     setNome('');
     setSinopse('');
